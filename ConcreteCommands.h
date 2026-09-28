@@ -2,37 +2,38 @@
 #define CONCRETE_COMMANDS_H
 
 #include "Command.h"
-#include "ResponseComponent.h"
+#include "ResponseUnit.h"
 #include "Incident.h"
-#include <string>
 
 class DispatchUnitCommand : public Command {
 private:
-    ResponseComponent* receiver;
+    ResponseUnit* receiver;
     Incident* incident;
 
 public:
-    DispatchUnitCommand(ResponseComponent* receiver, Incident* incident);
+    DispatchUnitCommand(ResponseUnit* receiver, Incident* incident);
     void execute() override;
 };
 
 class SecureAreaCommand : public Command {
 private:
-    ResponseComponent* receiver;
-    std::string location;
+    FacilitiesTeam* receiver;
+    Incident* incident;
 
 public:
-    SecureAreaCommand(ResponseComponent* receiver, std::string location);
+    // Ties specifically to the FacilitiesTeam to lock down an area
+    SecureAreaCommand(FacilitiesTeam* receiver, Incident* incident);
     void execute() override;
 };
 
 class IssueAlertCommand : public Command {
 private:
-    ResponseComponent* receiver;
-    std::string alertMessage;
+    AlertService* receiver;
+    Incident* incident;
 
 public:
-    IssueAlertCommand(ResponseComponent* receiver, std::string alertMessage);
+    // Ties specifically to the AlertService to broadcast emergencies
+    IssueAlertCommand(AlertService* receiver, Incident* incident);
     void execute() override;
 };
 

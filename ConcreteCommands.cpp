@@ -1,32 +1,31 @@
 #include "ConcreteCommands.h"
 
-DispatchUnitCommand::DispatchUnitCommand(ResponseComponent* receiver, Incident* incident) 
+DispatchUnitCommand::DispatchUnitCommand(ResponseUnit* receiver, Incident* incident) 
     : receiver(receiver), incident(incident) {}
 
 void DispatchUnitCommand::execute() {
     if (receiver && incident) {
-        std::string action = "Dispatching unit to Incident #" + std::to_string(incident->getId()) + 
-                             " at " + incident->getLocation();
-        receiver->takeAction(action);
+        // Calls the base response method on any generic ResponseUnit
+        receiver->respond(incident);
     }
 }
 
-SecureAreaCommand::SecureAreaCommand(ResponseComponent* receiver, std::string location)
-    : receiver(receiver), location(location) {}
+SecureAreaCommand::SecureAreaCommand(FacilitiesTeam* receiver, Incident* incident)
+    : receiver(receiver), incident(incident) {}
 
 void SecureAreaCommand::execute() {
-    if (receiver) {
-        std::string action = "Securing area and restricting access: " + location;
-        receiver->takeAction(action);
+    if (receiver && incident) {
+        // Uses Joelle's specific FacilitiesTeam method
+        receiver->reportAreaSafety(incident);
     }
 }
 
-IssueAlertCommand::IssueAlertCommand(ResponseComponent* receiver, std::string alertMessage)
-    : receiver(receiver), alertMessage(alertMessage) {}
+IssueAlertCommand::IssueAlertCommand(AlertService* receiver, Incident* incident)
+    : receiver(receiver), incident(incident) {}
 
 void IssueAlertCommand::execute() {
-    if (receiver) {
-        std::string action = "Broadcasting Emergency Alert: " + alertMessage;
-        receiver->takeAction(action);
+    if (receiver && incident) {
+        // Uses Joelle's specific AlertService method
+        receiver->sendEmergencyAlert(incident);
     }
 }
