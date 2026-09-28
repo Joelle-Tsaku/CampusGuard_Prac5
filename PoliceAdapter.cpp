@@ -1,6 +1,8 @@
 #include "PoliceAdapter.h"
+#include <iostream>
 
-PoliceAdapter::PoliceAdapter(LegacyPoliceSystem* legacySystem) : legacySystem(legacySystem) {}
+PoliceAdapter::PoliceAdapter(LegacyPoliceSystem* legacySystem, Mediator* mediator) 
+    : ResponseUnit("CityPoliceAdapter", mediator), legacySystem(legacySystem) {}
 
 PoliceAdapter::~PoliceAdapter() {
     if (legacySystem != nullptr) {
@@ -8,16 +10,17 @@ PoliceAdapter::~PoliceAdapter() {
     }
 }
 
-void PoliceAdapter::takeAction(const std::string& actionDetails) {
-    // 1. Translate the generic CampusGuard 'actionDetails' string into the legacy API's expected format.
-    // In a real system we might parse JSON or a formatted string. Here we'll do a simple mock translation.
+void PoliceAdapter::respond(Incident* incident) {
+    if (!incident) return;
+
+    // 1. Translate the Incident into the legacy API's expected format.
     std::string locationCode = "ZONE-UNKNOWN";
-    std::string severity = "CRITICAL";
+    std::string severity = incident->getSeverity();
 
     // Basic parsing logic
-    if (actionDetails.find("North") != std::string::npos) {
+    if (incident->getLocation().find("North") != std::string::npos) {
         locationCode = "ZONE-N1";
-    } else if (actionDetails.find("South") != std::string::npos) {
+    } else if (incident->getLocation().find("South") != std::string::npos) {
         locationCode = "ZONE-S1";
     }
 
