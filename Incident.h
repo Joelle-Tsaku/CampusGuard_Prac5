@@ -27,6 +27,7 @@ class Incident{
         void detach(Observer* observer);
         void notify();
 
+        void report();
         void activate();
         void contain();
         void resolve();
