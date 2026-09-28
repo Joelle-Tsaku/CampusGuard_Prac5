@@ -1,8 +1,8 @@
 CXX = g++
 CXXFLAGS = -std=c++11 -g -Wall
 
-# Add new .cpp files here as they are created
-SRCS = main.cpp 
+# Automatically pick up all .cpp files
+SRCS = $(wildcard *.cpp)
 OBJS = $(SRCS:.cpp=.o)
 TARGET = campus_guard
 

@@ -1,8 +1,35 @@
 #include "Incident.h"
 #include "IncidentState.h"
+#include "Observer.h"
+#include <algorithm>
 
 Incident::Incident(int id, std::string type, std::string location, std::string severity):id(id), type(type), location(location), severity(severity){
     currentState = new ReportedState();
+}
+
+Incident::~Incident() {
+    if (currentState != nullptr) {
+        delete currentState;
+    }
+}
+
+void Incident::attach(Observer* observer) {
+    if (std::find(observers.begin(), observers.end(), observer) == observers.end()) {
+        observers.push_back(observer);
+    }
+}
+
+void Incident::detach(Observer* observer) {
+    auto it = std::find(observers.begin(), observers.end(), observer);
+    if (it != observers.end()) {
+        observers.erase(it);
+    }
+}
+
+void Incident::notify() {
+    for (Observer* observer : observers) {
+        observer->update(this);
+    }
 }
 
 void Incident::activate(){
@@ -26,6 +53,7 @@ void Incident::setState(IncidentState* newState){
         delete currentState;
     }
     currentState = newState;
+    notify(); // Inform observers of the state change
 }
 
 
@@ -46,5 +74,5 @@ int Incident::getId() const {
 }
 
 std::string Incident::getStatus() const {
-    currentState->getStatusName();
+    return currentState->getStatusName();
 }

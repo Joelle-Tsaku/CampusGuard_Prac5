@@ -1,0 +1,15 @@
+# Documents and specifications
+*.docx
+*.pdf
+
+# Images
+*.jpeg
+*.jpg
+*.png
+
+# Windows Zone Identifiers
+*:Zone.Identifier
+
+# Build artifacts and executables
+*.o
+campus_guard
