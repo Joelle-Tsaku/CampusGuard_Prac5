@@ -16,8 +16,9 @@ class Incident{
 
     public:
         Incident(int id, std::string type, std::string location, std::string severity);
-        ~Incident(){}
+        ~Incident();
 
+        void report();
         void activate();
         void contain();
         void resolve();
