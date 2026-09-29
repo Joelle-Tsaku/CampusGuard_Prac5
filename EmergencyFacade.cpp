@@ -1,7 +1,11 @@
 #include "EmergencyFacade.h"
+#include "Incident.h"
+#include "IncidentService.h"
+#include "Mediator.h"
+#include "AccessControl.h"
+#include "ResponseUnit.h"
 #include <iostream>
-
-EmergencyFacade::EmergencyFacade( IncidentService* incidentService, ResponseUnit* mediator, AccessControl* accessControl, AlertService* alertService)
+EmergencyFacade::EmergencyFacade( IncidentService* incidentService, Mediator* mediator, AccessControl* accessControl, AlertService* alertService)
     : incidentService(incidentService), mediator(mediator), accessControl(accessControl), alertService(alertService) {}
 
 EmergencyFacade::~EmergencyFacade(){}

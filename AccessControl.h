@@ -9,11 +9,11 @@ class AccessControl {
         std::vector<std::string> lockedAreas;
 
     public:
-        AccessControl(){}
-        virtual ~AccessControl(){}
+        AccessControl();
+        virtual ~AccessControl();
 
-        virtual void lockArea(const std::string& area) = 0;
-        virtual void unlockArea(const std::string& area) = 0;
+        virtual void lockArea(const std::string& area);
+        virtual void unlockArea(const std::string& area);
 
         bool isAreaLocked(const std::string& area) const;
 };

@@ -5,6 +5,8 @@
 
 ResponseUnit::ResponseUnit(std::string name, Mediator* mediator) : name(name), mediator(mediator), dispatched(false){}
 
+ResponseUnit::~ResponseUnit(){}
+
 std::string ResponseUnit::getName() const {
     return name; 
 }

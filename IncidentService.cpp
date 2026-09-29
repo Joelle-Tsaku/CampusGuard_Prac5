@@ -85,7 +85,7 @@ void IncidentService::resolveIncident(int id){
     incident->resolve();
 }
 
-void IncidentService::reportFalseAlarm(int id) \{
+void IncidentService::reportFalseAlarm(int id) {
     Incident* incident = findIncident(id);
 
     if(incident == nullptr){

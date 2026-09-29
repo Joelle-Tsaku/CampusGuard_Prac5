@@ -3,19 +3,19 @@
 
 class Incident;
 class IncidentService;
-class ResponseUnit;
+class Mediator;
 class AccessControl;
 class AlertService; 
 
 class EmergencyFacade{
     private:
         IncidentService* incidentService;
-        ResponseUnit* mediator;
+        Mediator* mediator;
         AccessControl* accessControl;
         AlertService* alertService; 
 
     public: 
-        EmergencyFacade( IncidentService* incidentService, ResponseUnit* mediator, AccessControl* accessControl, AlertService* alertService);
+        EmergencyFacade( IncidentService* incidentService, Mediator* mediator, AccessControl* accessControl, AlertService* alertService);
         ~EmergencyFacade();
         void initiateEmergency(Incident* incident);
         void evacuateArea(Incident* incident);
