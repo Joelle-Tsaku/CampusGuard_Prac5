@@ -21,3 +21,11 @@ clean:
 # Useful for local testing before Dockerizing
 run: all
 	./$(TARGET)
+
+# Run with Valgrind to check for memory leaks
+valgrind: all
+	valgrind --leak-check=full --track-origins=yes ./$(TARGET)
+
+# Run with GDB for debugging
+gdb: all
+	gdb ./$(TARGET)
