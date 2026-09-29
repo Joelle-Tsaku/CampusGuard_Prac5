@@ -2,11 +2,15 @@
 #define INCIDENT_H
 
 #include <string>
+#include <vector>
+
 class IncidentState; 
+class Observer;
 
 class Incident{
     private:
         int id; 
+        std::vector<Observer*> observers;
         std::string type;
         std::string location;
         std::string severity;
@@ -16,7 +20,12 @@ class Incident{
 
     public:
         Incident(int id, std::string type, std::string location, std::string severity);
-        ~Incident();
+        virtual ~Incident();
+
+        // Observer Pattern methods
+        void attach(Observer* observer);
+        void detach(Observer* observer);
+        void notify();
 
         void report();
         void activate();

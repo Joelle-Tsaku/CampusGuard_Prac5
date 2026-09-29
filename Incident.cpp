@@ -1,5 +1,7 @@
 #include "Incident.h"
 #include "IncidentState.h"
+#include "Observer.h"
+#include <algorithm>
 #include <iostream>
 
 Incident::Incident(int id, std::string type, std::string location, std::string severity):id(id), type(type), location(location), severity(severity){
@@ -7,17 +9,37 @@ Incident::Incident(int id, std::string type, std::string location, std::string s
 }
 
 Incident::~Incident(){
-    delete currentState;
+    if (currentState != nullptr) {
+        delete currentState;
+    }
+}
+
+void Incident::attach(Observer* observer) {
+    if (std::find(observers.begin(), observers.end(), observer) == observers.end()) {
+        observers.push_back(observer);
+    }
+}
+
+void Incident::detach(Observer* observer) {
+    auto it = std::find(observers.begin(), observers.end(), observer);
+    if (it != observers.end()) {
+        observers.erase(it);
+    }
+}
+
+void Incident::notify() {
+    for (Observer* observer : observers) {
+        observer->update(this);
+    }
 }
 
 void Incident::report(){
     if(currentState == nullptr){
-        currentState = new ReportedState();
+        currentState = new ReportedState(); 
         std::cout << "Incident reported.";
-
+        notify(); 
         return; 
     }
-
     currentState->report(this);
 }
 
@@ -58,6 +80,7 @@ void Incident::setState(IncidentState* newState){
         delete currentState;
     }
     currentState = newState;
+    notify(); // Inform observers of the state change
 }
 
 std::string Incident::getLocation() const {
@@ -80,6 +103,5 @@ std::string Incident::getStatus() const {
     if(currentState == nullptr){
         return "Unreported";
     }
-
     return currentState->getStatusName();
 }
