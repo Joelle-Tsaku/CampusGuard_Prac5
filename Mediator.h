@@ -9,7 +9,7 @@ class ResponseUnit;
 
 class Mediator{
     public:
-        Mediator();
+        Mediator(){};
         virtual ~Mediator(){};
         virtual void notify(ResponseUnit* sender, Incident* incident, const std::string& event) = 0;
 };
